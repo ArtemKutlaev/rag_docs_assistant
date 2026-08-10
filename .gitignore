@@ -1,0 +1,6 @@
+.env
+venv/
+**/__pycache__/
+data/Rashka_book.pdf
+vector_db/
+!/vector_db/.gitkeep
