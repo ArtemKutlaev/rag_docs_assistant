@@ -17,7 +17,7 @@ def search_in_db(query:str, db_path:str = "vector_db", k: int = 3):
     """
     
     embeddings = HuggingFaceEmbeddings(
-        model_name= "all-MiniLM-L6-v2"
+        model_name= "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
         )
     
     vector_db = Chroma(
@@ -28,10 +28,3 @@ def search_in_db(query:str, db_path:str = "vector_db", k: int = 3):
     results = vector_db.similarity_search_with_score(query,k)
     
     return results
-
-if __name__ == "__main__":
-    user_query = input("Введите ваш запрос: ")
-    docs = search_in_db(user_query)
-    
-    for doc,score in docs:
-        print(doc.page_content)

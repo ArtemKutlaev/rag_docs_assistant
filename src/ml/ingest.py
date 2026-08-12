@@ -18,13 +18,13 @@ def create_vector_db(path_book:str) -> None:
     documents = loader_pdf.load()
     
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
+        chunk_size=600,
         chunk_overlap=50
     )
     chunks = text_splitter.split_documents(documents)
     
     embeddings = HuggingFaceEmbeddings(
-        model_name="all-MiniLM-L6-v2"
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
     vector_db = Chroma.from_documents(
         documents=chunks,
@@ -33,4 +33,10 @@ def create_vector_db(path_book:str) -> None:
     )
 
 if __name__ == "__main__":
-    create_vector_db("data/Rashka_book.pdf")
+    book_path = input("Введите путь к PDF-файлу книги: ").strip()
+    
+    try:
+        create_vector_db(book_path)
+        print("Векторная база данных успешно создана и сохранена!")
+    except Exception as e:
+        print(f"Ошибка при создании базы: {e}")
