@@ -22,7 +22,7 @@ def get_answer_yandex(context:str,query:str) -> str:
         model = (
             sdk.models.completions("yandexgpt").configure(
                 temperature= 0.2,
-                max_tokens=700
+                max_tokens=1000
             )
         )
         result = model.run(get_prompt(context, query))
