@@ -4,12 +4,12 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
-def create_vector_db() -> None:
+def create_vector_db(path_book:str) -> None:
     """
     Функция загружает PDF-документ, нарезает его на чанки, создает эмбеддинги
     и сохраняет их в локальную векторную базу данных ChromaDB.
     """
-    pdf_path = Path("data/Rashka_book.pdf")
+    pdf_path = Path(path_book)
     db_path = Path("vector_db")
     if not pdf_path.exists():
         raise FileNotFoundError(f"Файл не найден по пути: {pdf_path}")
@@ -33,4 +33,4 @@ def create_vector_db() -> None:
     )
 
 if __name__ == "__main__":
-    create_vector_db()
+    create_vector_db("data/Rashka_book.pdf")
