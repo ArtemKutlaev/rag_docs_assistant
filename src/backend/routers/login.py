@@ -4,6 +4,7 @@ from src.backend.database import get_db
 from src.backend.models.model import UserCreate
 from src.backend.security import verify_password
 from src.backend.models.model_base import User
+from src.backend.jwt import create_access_token
 
 router = APIRouter(prefix="/auth", tags=["Login"])
 
@@ -17,4 +18,8 @@ def login(user_data: UserCreate, db: Session = Depends(get_db)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Неверное имя пользователя или пароль"
         )
-    return {"message":"Успешный вход!", "username":user.username}
+    access_token = create_access_token(data={"sub":user.username})
+    
+    return {"message":"Успешный вход!",
+            "username":user.username,
+            "access_token": access_token}
