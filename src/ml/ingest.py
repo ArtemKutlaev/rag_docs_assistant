@@ -4,13 +4,13 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
-def create_vector_db(path_book:str) -> None:
+def create_vector_db(path_book:str,book_id: int) -> None:
     """
     Функция загружает PDF-документ, нарезает его на чанки, создает эмбеддинги
     и сохраняет их в локальную векторную базу данных ChromaDB.
     """
     pdf_path = Path(path_book)
-    db_path = Path("vector_db")
+    db_path = f"vector_db/book_{book_id}"
     if not pdf_path.exists():
         raise FileNotFoundError(f"Файл не найден по пути: {pdf_path}")
     
@@ -26,17 +26,8 @@ def create_vector_db(path_book:str) -> None:
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
-    vector_db = Chroma.from_documents(
+    Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,
-        persist_directory=str(db_path)
+        persist_directory=db_path
     )
-
-if __name__ == "__main__":
-    book_path = input("Введите путь к PDF-файлу книги: ").strip()
-    
-    try:
-        create_vector_db(book_path)
-        print("Векторная база данных успешно создана и сохранена!")
-    except Exception as e:
-        print(f"Ошибка при создании базы: {e}")
