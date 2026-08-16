@@ -7,3 +7,5 @@ data/book/*
 !/vector_db/.gitkeep
 data/database/*
 !/data/database/.gitkeep
+**/node_modules/
+**/dist/
