@@ -9,4 +9,9 @@ class UserCreate(BaseModel):
     username: str
     password: str
     
+class ChatRequest(BaseModel):
+    """Валидация запроса пользователя в чате"""
+    query: str
+    book_id: int
+    
     
