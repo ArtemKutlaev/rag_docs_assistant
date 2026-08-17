@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends,UploadFile,File, HTTPException
+from fastapi import APIRouter,Depends,UploadFile,File, HTTPException,Form
 from sqlalchemy.orm import Session
 from src.backend.database import get_db
 from src.backend.models.model_base import User
@@ -13,8 +13,8 @@ from src.ml.ingest import create_vector_db
 router = APIRouter(prefix= "/book", tags=["Books"])
 
 @router.post("/upload")
-def upload_and_vectorize_books(title:str,
-                               is_public: bool,
+def upload_and_vectorize_books(title: str = Form(...),
+                               is_public: bool = Form(...),
                                file: UploadFile = File(...),
                                db: Session = Depends(get_db),
                                current_user : User = Depends(get_current_user)):

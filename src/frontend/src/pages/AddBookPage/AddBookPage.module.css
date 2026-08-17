@@ -8,84 +8,399 @@
 }
 
 .eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 
-  font-size: 14px;
+  color: #2563eb;
+
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-
-  opacity: 0.55;
 }
 
 .title {
   margin: 0;
 
-  font-size: clamp(32px, 5vw, 56px);
-  line-height: 1;
+  color: #0f172a;
+
+  font-size: clamp(36px, 5vw, 54px);
+  font-weight: 800;
+  line-height: 1.05;
   letter-spacing: -0.04em;
 }
 
 .description {
-  max-width: 560px;
-  margin: 16px 0 0;
+  max-width: 520px;
+  margin: 14px 0 0;
 
-  font-size: 18px;
+  color: #64748b;
+
+  font-size: 17px;
   line-height: 1.6;
-
-  opacity: 0.65;
 }
 
-.empty {
+.form {
   display: flex;
-  min-height: 320px;
+  width: min(100%, 720px);
 
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 24px;
 
-  padding: 40px 24px;
+  padding: 28px;
 
-  text-align: center;
-
-  border: 1px solid #dedede;
-  border-radius: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 26px;
 
   background: #ffffff;
+
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.05);
 }
 
-.emptyIcon {
-  margin-bottom: 16px;
-  font-size: 42px;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
 }
 
-.empty h2 {
+.fieldLabel,
+.field > label {
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.field input[type='text'] {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 15px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+
+  outline: none;
+
+  color: #0f172a;
+  background: #ffffff;
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.field input[type='text']:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px #dbeafe;
+}
+
+.filePicker {
+  display: flex;
+  min-height: 100px;
+
+  align-items: center;
+  gap: 16px;
+
+  padding: 18px 20px;
+
+  border: 1px dashed #94a3b8;
+  border-radius: 18px;
+
+  background: #f8fafc;
+
+  cursor: pointer;
+
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.filePicker:hover {
+  border-color: #60a5fa;
+  background: #f8fbff;
+}
+
+.filePickerSelected {
+  border-style: solid;
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+.filePicker input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+
+  overflow: hidden;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fileIcon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  place-items: center;
+
+  border-radius: 14px;
+
+  background: #dbeafe;
+
+  color: #2563eb;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.fileContent {
+  display: flex;
+  min-width: 0;
+
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.fileContent strong {
+  color: #0f172a;
+
+  font-size: 14px;
+}
+
+.fileContent span {
+  overflow: hidden;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileAction {
+  flex-shrink: 0;
+
+  padding: 9px 13px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.accessSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.accessHeader {
+  display: flex;
+
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.accessDescription {
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+.accessSwitch {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+
+  padding: 5px;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+
+  background: #f8fafc;
+}
+
+.accessOption {
+  display: flex;
+  min-height: 52px;
+
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.accessOption:hover:not(:disabled) {
+  color: #334155;
+}
+
+.accessOptionActive {
+  background: #ffffff;
+
+  color: #2563eb;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.accessIcon {
+  font-size: 17px;
+}
+
+.accessHint {
   margin: 0;
-  font-size: 24px;
+
+  color: #64748b;
+
+  font-size: 13px;
+  line-height: 1.4;
 }
 
-.empty p {
-  max-width: 420px;
-  margin: 10px 0 0;
+.processing {
+  display: flex;
 
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 14px;
+
+  background: #eff6ff;
+
+  color: #1e40af;
+}
+
+.processing strong {
+  font-size: 14px;
+}
+
+.processing p {
+  margin: 4px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
   line-height: 1.5;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  border: 2px solid #bfdbfe;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+
+  animation: spin 700ms linear infinite;
+}
+
+.error {
+  padding: 13px 14px;
+
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+
+  color: #b91c1c;
+  background: #fef2f2;
+
+  font-size: 14px;
+}
+
+.submit {
+  min-height: 50px;
+
+  border: 0;
+  border-radius: 14px;
+
+  color: #ffffff;
+  background: #2563eb;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: #1d4ed8;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+}
+
+.submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submit:disabled {
+  cursor: not-allowed;
   opacity: 0.6;
 }
 
-@media (max-width: 480px) {
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
   .description {
     font-size: 16px;
   }
 
-  .empty {
-    min-height: 280px;
-    padding: 32px 20px;
-    border-radius: 24px;
+  .form {
+    padding: 22px 18px;
+    border-radius: 20px;
   }
-}
 
-@media (min-width: 768px) {
-  .page {
-    min-height: calc(100vh - 164px);
+  .filePicker {
+    gap: 12px;
+    padding: 15px;
+  }
+
+  .fileAction {
+    padding: 8px 10px;
+  }
+
+  .accessHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .accessOption {
+    min-height: 48px;
   }
 }

@@ -3,89 +3,101 @@
 }
 
 .header {
-  max-width: 720px;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 
-  font-size: 14px;
+  color: #2563eb;
+
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-
-  opacity: 0.55;
 }
 
 .title {
   margin: 0;
 
-  font-size: clamp(32px, 5vw, 56px);
-  line-height: 1;
+  color: #0f172a;
+
+  font-size: clamp(36px, 5vw, 54px);
+  font-weight: 800;
+  line-height: 1.05;
   letter-spacing: -0.04em;
 }
 
-.description {
-  max-width: 560px;
-  margin: 16px 0 0;
+.title::after {
+  content: "";
 
-  font-size: 18px;
-  line-height: 1.6;
+  display: block;
 
-  opacity: 0.65;
+  width: 48px;
+  height: 4px;
+
+  margin-top: 14px;
+
+  border-radius: 999px;
+
+  background: #2563eb;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    margin-bottom: 28px;
+  }
+
+  .grid {
+    gap: 14px;
+  }
 }
 
 .empty {
   display: flex;
-  min-height: 320px;
+  min-height: 240px;
 
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  padding: 40px 24px;
+  padding: 32px;
 
   text-align: center;
 
-  border: 1px solid #dedede;
-  border-radius: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
 
   background: #ffffff;
-}
 
-.emptyIcon {
-  margin-bottom: 16px;
-  font-size: 42px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
 }
 
 .empty h2 {
   margin: 0;
-  font-size: 24px;
+
+  color: #172033;
+
+  font-size: 22px;
 }
 
 .empty p {
   max-width: 420px;
   margin: 10px 0 0;
 
+  color: #64748b;
+
   line-height: 1.5;
-  opacity: 0.6;
-}
-
-@media (max-width: 480px) {
-  .description {
-    font-size: 16px;
-  }
-
-  .empty {
-    min-height: 280px;
-    padding: 32px 20px;
-    border-radius: 24px;
-  }
-}
-
-@media (min-width: 768px) {
-  .page {
-    min-height: calc(100vh - 164px);
-  }
 }
