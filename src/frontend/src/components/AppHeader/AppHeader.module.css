@@ -1,0 +1,52 @@
+.header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: min(100%, 1180px);
+
+  margin: 0 auto;
+  padding: 18px 24px 4px;
+}
+
+.brand {
+  display: flex;
+
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  display: grid;
+  width: 34px;
+  height: 34px;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.name {
+  color: #172033;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 14px 16px 2px;
+  }
+
+  .name {
+    display: none;
+  }
+}

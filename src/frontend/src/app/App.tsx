@@ -1,7 +1,9 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
+import AppHeader from '../components/AppHeader/AppHeader';
 import BottomNavigation from '../components/BottomNavigation/BottomNavigation';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import { useAuth } from '../features/auth/AuthContext';
 
 import AddBookPage from '../pages/AddBookPage/AddBookPage';
 import BookChatPage from '../pages/BookChatPage/BookChatPage';
@@ -11,11 +13,26 @@ import MyBooksPage from '../pages/MyBooksPage/MyBooksPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 
 function App() {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  const isPublicPage =
+    location.pathname === '/login' ||
+    location.pathname === '/register';
+
+  const showAppChrome =
+    isAuthenticated && !isPublicPage;
+
   return (
     <div className="app">
+      {showAppChrome && <AppHeader />}
+
       <main className="app__content">
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/login"
+            element={<LoginPage />}
+          />
 
           <Route
             path="/register"
@@ -60,32 +77,44 @@ function App() {
 
           <Route
             path="/"
-            element={<Navigate to="/books" replace />}
+            element={
+              <Navigate
+                to="/books"
+                replace
+              />
+            }
           />
 
           <Route
             path="*"
-            element={<Navigate to="/books" replace />}
+            element={
+              <Navigate
+                to="/books"
+                replace
+              />
+            }
           />
         </Routes>
       </main>
 
-      <Routes>
-        <Route
-          path="/books"
-          element={<BottomNavigation />}
-        />
+      {showAppChrome && (
+        <Routes>
+          <Route
+            path="/books"
+            element={<BottomNavigation />}
+          />
 
-        <Route
-          path="/my-books"
-          element={<BottomNavigation />}
-        />
+          <Route
+            path="/my-books"
+            element={<BottomNavigation />}
+          />
 
-        <Route
-          path="/add-book"
-          element={<BottomNavigation />}
-        />
-      </Routes>
+          <Route
+            path="/add-book"
+            element={<BottomNavigation />}
+          />
+        </Routes>
+      )}
     </div>
   );
 }
