@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import BookCard from '../../components/BookCard/BookCard';
 import LoadingState from '../../components/LoadingState/LoadingState';
-import { useAuth } from '../../features/auth/AuthContext';
 import { getAllBooks } from '../../features/books/api/getAllBooks';
 import type { Book } from '../../features/books/types';
-import { ApiError } from '../../shared/api/client';
 
 import styles from './CommonBooksPage.module.css';
 
 function CommonBooksPage() {
-  const navigate = useNavigate();
-  const { logout } = useAuth();
-
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,15 +29,6 @@ function CommonBooksPage() {
 
         setBooks(normalizedBooks);
       } catch (requestError) {
-        if (
-          requestError instanceof ApiError &&
-          requestError.status === 401
-        ) {
-          logout();
-          navigate('/login', { replace: true });
-          return;
-        }
-
         setError(
           requestError instanceof Error
             ? requestError.message
@@ -55,7 +40,7 @@ function CommonBooksPage() {
     }
 
     loadBooks();
-  }, [logout, navigate]);
+  }, []);
 
   return (
     <section className={styles.page}>
@@ -72,7 +57,6 @@ function CommonBooksPage() {
       {!isLoading && error && (
         <div className={styles.empty}>
           <h2>Не удалось загрузить книги</h2>
-
           <p>{error}</p>
         </div>
       )}

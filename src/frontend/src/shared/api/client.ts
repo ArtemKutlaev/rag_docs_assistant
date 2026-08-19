@@ -14,10 +14,10 @@ export class ApiError extends Error {
   }
 }
 
-function createHeaders(
+function getHeaders(
   headers?: HeadersInit,
   body?: BodyInit | null,
-  auth?: boolean,
+  auth = false,
 ) {
   const requestHeaders = new Headers(headers);
 
@@ -40,13 +40,33 @@ function createHeaders(
   return requestHeaders;
 }
 
-async function handleError(response: Response): Promise<never> {
-  const errorBody = await response.json().catch(() => null);
+function handleUnauthorized() {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('username');
 
-  throw new ApiError(
-    errorBody?.detail || `Ошибка запроса: ${response.status}`,
-    response.status,
-  );
+  if (window.location.pathname !== '/login') {
+    window.location.assign('/login');
+  }
+}
+
+async function parseError(response: Response): Promise<never> {
+  let message = `Ошибка запроса: ${response.status}`;
+
+  try {
+    const errorBody = await response.json();
+
+    if (errorBody?.detail) {
+      message = errorBody.detail;
+    }
+  } catch {
+    // Оставляем стандартное сообщение.
+  }
+
+  if (response.status === 401) {
+    handleUnauthorized();
+  }
+
+  throw new ApiError(message, response.status);
 }
 
 export async function apiRequest<T>(
@@ -57,7 +77,7 @@ export async function apiRequest<T>(
 
   const response = await fetch(`${API_URL}${path}`, {
     ...requestOptions,
-    headers: createHeaders(
+    headers: getHeaders(
       headers,
       requestOptions.body,
       auth,
@@ -65,10 +85,10 @@ export async function apiRequest<T>(
   });
 
   if (!response.ok) {
-    await handleError(response);
+    await parseError(response);
   }
 
-  return response.json();
+  return response.json() as Promise<T>;
 }
 
 export async function apiBlobRequest(
@@ -79,7 +99,7 @@ export async function apiBlobRequest(
 
   const response = await fetch(`${API_URL}${path}`, {
     ...requestOptions,
-    headers: createHeaders(
+    headers: getHeaders(
       headers,
       requestOptions.body,
       auth,
@@ -87,7 +107,7 @@ export async function apiBlobRequest(
   });
 
   if (!response.ok) {
-    await handleError(response);
+    await parseError(response);
   }
 
   return response.blob();
