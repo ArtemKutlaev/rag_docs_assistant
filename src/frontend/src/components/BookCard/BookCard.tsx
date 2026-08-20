@@ -78,12 +78,12 @@ function BookCard({ book }: BookCardProps) {
 
   function handleCardClick() {
     if (!isProcessing) {
-      setIsMenuOpen(true);
+      setIsMenuOpen((current) => !current);
     }
   }
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <article
         className={styles.card}
         role="button"
@@ -91,6 +91,7 @@ function BookCard({ book }: BookCardProps) {
         onClick={handleCardClick}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
             handleCardClick();
           }
         }}
@@ -109,6 +110,10 @@ function BookCard({ book }: BookCardProps) {
           </div>
 
           <h2 className={styles.title}>{book.title}</h2>
+
+          <span className={styles.hint}>
+            Нажмите, чтобы открыть действия
+          </span>
         </div>
       </article>
 
@@ -120,7 +125,7 @@ function BookCard({ book }: BookCardProps) {
           onClose={() => setIsMenuOpen(false)}
         />
       )}
-    </>
+    </div>
   );
 }
 
