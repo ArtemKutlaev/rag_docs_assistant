@@ -13,3 +13,9 @@ export type AuthCredentials = {
   username: string;
   password: string;
 };
+
+export type RegisterCredentials = {
+  username: string;
+  password: string;
+  password_confirm: string;
+};

@@ -15,6 +15,11 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Пользователь с таким именем уже существует"
         )
+    if user_data.password != user_data.password_confirm:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Пароли не совпадают"
+        )
     hashed_password = get_password_hash(user_data.password)
     new_user = User(
         username = user_data.username,

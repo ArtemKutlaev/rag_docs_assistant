@@ -93,6 +93,14 @@
   box-shadow: 0 0 0 4px #dbeafe;
 }
 
+.fieldError {
+  margin: -8px 0 0;
+
+  color: #dc2626;
+
+  font-size: 13px;
+}
+
 .submit {
   min-height: 48px;
 
@@ -108,7 +116,7 @@
 
   transition:
     background-color 150ms ease,
-    transform 150ms ease;
+    opacity 150ms ease;
 }
 
 .submit:hover:not(:disabled) {
@@ -117,7 +125,7 @@
 
 .submit:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .error {

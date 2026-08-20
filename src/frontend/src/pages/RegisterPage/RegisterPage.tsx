@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { register } from '../../features/auth/api/register';
@@ -10,20 +10,30 @@ function RegisterPage() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>,
+  ) {
     event.preventDefault();
 
     setError(null);
+
+    if (password !== passwordConfirm) {
+      setError('Пароли не совпадают.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
       await register({
         username,
         password,
+        password_confirm: passwordConfirm,
       });
 
       navigate('/login', {
@@ -51,7 +61,9 @@ function RegisterPage() {
 
           <h1>Создать аккаунт</h1>
 
-          <p>Зарегистрируйтесь, чтобы создать свою библиотеку.</p>
+          <p>
+            Зарегистрируйтесь, чтобы создать свою библиотеку.
+          </p>
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -60,10 +72,13 @@ function RegisterPage() {
 
             <input
               value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) =>
+                setUsername(event.target.value)
+              }
               autoComplete="username"
-              placeholder="Придумайте имя пользователя"
+              placeholder="Введите имя пользователя"
               required
+              disabled={isSubmitting}
             />
           </label>
 
@@ -73,21 +88,52 @@ function RegisterPage() {
             <input
               type="password"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event) =>
+                setPassword(event.target.value)
+              }
               autoComplete="new-password"
-              placeholder="Придумайте пароль"
+              placeholder="Введите пароль"
               required
+              disabled={isSubmitting}
             />
           </label>
+
+          <label className={styles.field}>
+            <span>Повторите пароль</span>
+
+            <input
+              type="password"
+              value={passwordConfirm}
+              onChange={(event) =>
+                setPasswordConfirm(event.target.value)
+              }
+              autoComplete="new-password"
+              placeholder="Повторите пароль"
+              required
+              disabled={isSubmitting}
+            />
+          </label>
+
+          {passwordConfirm &&
+            password !== passwordConfirm && (
+              <p className={styles.fieldError}>
+                Пароли не совпадают.
+              </p>
+            )}
 
           {error && <p className={styles.error}>{error}</p>}
 
           <button
             className={styles.submit}
             type="submit"
-            disabled={isSubmitting}
+            disabled={
+              isSubmitting ||
+              password !== passwordConfirm
+            }
           >
-            {isSubmitting ? 'Регистрируем...' : 'Зарегистрироваться'}
+            {isSubmitting
+              ? 'Регистрируем...'
+              : 'Зарегистрироваться'}
           </button>
         </form>
 
