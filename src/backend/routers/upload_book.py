@@ -6,7 +6,7 @@ from src.backend.jwt import get_current_user
 from pathlib import Path
 import shutil
 from src.backend.models.model_base import Book
-from src.ml.ingest import create_vector_db
+from src.ml.auxiliary.all_processing import all_processing
 
 
 
@@ -38,11 +38,13 @@ def upload_and_vectorize_books(title: str = Form(...),
         owner_id = current_user.id
     )
     db.add(new_book)
-    db.commit()
-    db.refresh(new_book)
+    db.flush()
     
     try: 
-        create_vector_db(path_book=str(file_path), book_id= new_book.id)
+        tags = all_processing(path_book=str(file_path), book_id= new_book.id)
+        new_book.tags = tags
+        db.commit()
+        db.refresh(new_book)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при создании векторной базы: {e}")
     return {

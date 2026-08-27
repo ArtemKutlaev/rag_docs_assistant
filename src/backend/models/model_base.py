@@ -1,4 +1,4 @@
-from sqlalchemy import Column,Integer,String, Boolean,ForeignKey
+from sqlalchemy import Column,Integer,String, Boolean,ForeignKey,JSON
 from sqlalchemy.orm import relationship
 from src.backend.database import Base
 
@@ -17,5 +17,6 @@ class Book(Base):
     title = Column(String,index=True)
     file_path = Column(String)
     is_public = Column(Boolean,default=True)
+    tags = Column(JSON, nullable=True)
     owner_id = Column(Integer,ForeignKey("users.id"))
     owner = relationship("User", back_populates="books")

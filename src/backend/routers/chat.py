@@ -2,7 +2,7 @@ from fastapi import APIRouter,Depends,HTTPException,status
 from src.backend.models.model_base import User,Book
 from src.backend.jwt import get_current_user
 from src.backend.models.model import ChatRequest
-from src.ml.vector_search import search_in_db
+from src.ml.rag.vector_search import search_in_db
 from src.services.llm import get_answer_yandex
 from sqlalchemy.orm import Session
 from src.backend.database import get_db
