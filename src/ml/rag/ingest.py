@@ -4,15 +4,16 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
+embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    )
+
 def create_vector_db(book_id: int,chunks) -> None:
     """
     Функция создает эмбеддинги
     и сохраняет их в локальную векторную базу данных ChromaDB.
     """
     db_path = f"vector_db/book_{book_id}"
-    embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-    )
     Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,

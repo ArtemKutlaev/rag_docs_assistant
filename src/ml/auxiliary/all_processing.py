@@ -10,7 +10,7 @@ def all_processing(path_book:str, book_id: int):
 
     combined_text = "\n".join(
         chunk.page_content
-        for chunk in chunks[:5]
+        for chunk in chunks[1:10]
         if chunk.page_content
     )
     tags = extract_tags(combined_text)
