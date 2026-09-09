@@ -25,6 +25,7 @@ function MyBooksPage() {
           title: book.title,
           file_path: book.file_path,
           is_public: book.is_public,
+          tags: book.tags,
         }));
 
         setBooks(normalizedBooks);
@@ -67,7 +68,7 @@ function MyBooksPage() {
           <h2>У тебя пока нет книг</h2>
 
           <p>
-            Добавь свою первую книгу, чтобы начать работу.
+            Загрузи первую книгу, чтобы она появилась здесь.
           </p>
         </div>
       )}

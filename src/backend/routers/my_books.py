@@ -15,7 +15,8 @@ def my_books(current_user: User = Depends(get_current_user)):
                 "id" : book.id,
                 "title" : book.title,
                 "file_path" : book.file_path,
-                "is_public" : book.is_public
+                "is_public" : book.is_public,
+                "tags": book.tags
             }
         )
     return result

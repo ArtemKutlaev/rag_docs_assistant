@@ -15,11 +15,23 @@ type BookCardProps = {
   book: Book;
 };
 
+const CATEGORY_LABELS: Record<string, string> = {
+  PER: 'Люди',
+  ORG: 'Организации',
+  LOC: 'Места',
+};
+
 function BookCard({ book }: BookCardProps) {
   const navigate = useNavigate();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const tagGroups = book.tags
+    ? Object.entries(book.tags).filter(
+        ([, tags]) => tags && tags.length > 0,
+      )
+    : [];
 
   async function handleRead() {
     try {
@@ -110,6 +122,38 @@ function BookCard({ book }: BookCardProps) {
           </div>
 
           <h2 className={styles.title}>{book.title}</h2>
+
+          {tagGroups.length > 0 && (
+            <div className={styles.tags}>
+              {tagGroups.map(([category, tags]) => (
+                <div
+                  className={styles.tagGroup}
+                  key={category}
+                >
+                  <span className={styles.tagLabel}>
+                    {CATEGORY_LABELS[category] ?? category}:
+                  </span>
+
+                  <div className={styles.tagList}>
+                    {tags?.map((tag) => (
+                      <span
+                        className={styles.tag}
+                        key={`${category}-${tag}`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {tagGroups.length === 0 && (
+            <span className={styles.noTags}>
+              Теги не найдены
+            </span>
+          )}
 
           <span className={styles.hint}>
             Нажмите, чтобы открыть действия

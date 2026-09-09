@@ -25,6 +25,7 @@ function CommonBooksPage() {
           title: book.title,
           file_path: book.file_path,
           is_public: true,
+          tags: book.tags,
         }));
 
         setBooks(normalizedBooks);

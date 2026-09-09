@@ -20,7 +20,8 @@ def all_books(db: Session = Depends(get_db), current_user: User = Depends(get_cu
                 "id" : book.id,
                 "title" : book.title,
                 "file_path" : book.file_path,
-                "owner_username" : book.owner.username if book.owner else "Неизвестен"
+                "owner_username" : book.owner.username if book.owner else "Неизвестен",
+                "tags": book.tags
             }
         )
     return result

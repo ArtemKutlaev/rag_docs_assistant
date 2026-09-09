@@ -15,7 +15,7 @@ def extract_tags(text:str) -> list[str]:
         text (str): Текст книги/записи
 
     Returns:
-        list[str]: Сущности найденные в тексте
+        dict[str, list[str]]: Словарь сущностей, сгруппированных по типу.
     """
 
     raw_result = ner_model(text)
@@ -31,5 +31,3 @@ def extract_tags(text:str) -> list[str]:
                 tags[group].append(word)
 
     return dict(tags)
-
-print(extract_tags("Себастьян Рашка написал книгу о машинном обучении с использованием TensorFlow"))
