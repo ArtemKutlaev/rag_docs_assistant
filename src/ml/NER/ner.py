@@ -26,7 +26,7 @@ def extract_tags(text:str) -> list[str]:
         confidence = entity["score"]
         group = entity["entity_group"]
 
-        if confidence >= 0.6:
+        if confidence >= 0.7:
             if word not in tags[group]:
                 tags[group].append(word)
 

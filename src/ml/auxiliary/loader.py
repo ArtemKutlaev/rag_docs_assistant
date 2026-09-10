@@ -13,8 +13,8 @@ def prepare_chunks(path_book:str):
     documents = loader_pdf.load()
             
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=600,
-        chunk_overlap=50
+        chunk_size=800,
+        chunk_overlap=80
     )
     chunks = text_splitter.split_documents(documents)
     return chunks

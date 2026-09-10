@@ -5,7 +5,10 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
 embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+        model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        encode_kwargs = {
+            "batch_size" :64
+        }
     )
 
 def create_vector_db(book_id: int,chunks) -> None:

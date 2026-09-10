@@ -2,6 +2,9 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from pathlib import Path
 
+embeddings = HuggingFaceEmbeddings(
+        model_name= "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+        )
 
 def search_in_db(query:str, book_id: int, k: int = 3):
     """Ищет k самых похожих чанков в векторной базе данных ChromaDB по текстовому запросу.
@@ -16,9 +19,6 @@ def search_in_db(query:str, book_id: int, k: int = 3):
         объект документа (Document) с текстом и метрику схожести/расстояния (float).
     """
     db_path = f"vector_db/book_{book_id}"
-    embeddings = HuggingFaceEmbeddings(
-        model_name= "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-        )
     
     vector_db = Chroma(
         persist_directory=db_path,

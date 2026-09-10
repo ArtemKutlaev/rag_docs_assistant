@@ -2,7 +2,7 @@ export type BookTags = {
   PER?: string[];
   ORG?: string[];
   LOC?: string[];
-
+  MISC?: string[];
   [key: string]: string[] | undefined;
 };
 

@@ -19,7 +19,10 @@ const CATEGORY_LABELS: Record<string, string> = {
   PER: 'Люди',
   ORG: 'Организации',
   LOC: 'Места',
+  MISC: 'Другое',
 };
+
+const CATEGORY_ORDER = ['PER', 'ORG', 'LOC', 'MISC'];
 
 function BookCard({ book }: BookCardProps) {
   const navigate = useNavigate();
@@ -28,10 +31,10 @@ function BookCard({ book }: BookCardProps) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const tagGroups = book.tags
-    ? Object.entries(book.tags).filter(
-        ([, tags]) => tags && tags.length > 0,
-      )
-    : [];
+  ? CATEGORY_ORDER
+      .map((category) => [category, book.tags?.[category]] as const)
+      .filter(([, tags]) => tags && tags.length > 0)
+  : [];
 
   async function handleRead() {
     try {
